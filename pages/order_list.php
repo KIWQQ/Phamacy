@@ -27,7 +27,7 @@ ob_start();
       } else {
         $customer = $q;
       }
-    }g
+    }
     // support combined sort+dir in a single select (format: key:dir)
     $sortdir = isset($_GET['sortdir']) ? trim($_GET['sortdir']) : 'order_date:desc';
     if (strpos($sortdir, ':') !== false) {
