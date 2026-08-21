@@ -1,30 +1,55 @@
 <?php
 // config/db.php
+
+function getDbConfig()
+{
+    return [
+        'host'    => getenv('DB_HOST') ?: '127.0.0.1',
+        'port'    => (int)(getenv('DB_PORT') ?: 3306),
+        'dbname'  => getenv('DB_NAME') ?: 'pharmacy',
+        'user'    => getenv('DB_USER') ?: 'root',
+        'password'=> getenv('DB_PASSWORD') ?: '',
+        'charset' => 'utf8mb4'
+    ];
+}
+
 function getPDO()
 {
     static $pdo = null;
-    if ($pdo) return $pdo;
 
-    $host = '127.0.0.1';
-    $db   = 'pharmacy';
-    $user = 'root';
-    $pass = '';
-    $charset = 'utf8mb4';
+    if ($pdo !== null) {
+        return $pdo;
+    }
 
-    $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-    $opts = [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        PDO::ATTR_EMULATE_PREPARES => false,
-    ];
+    $config = getDbConfig();
+
+    $dsn = "mysql:host={$config['host']};"
+         . "port={$config['port']};"
+         . "dbname={$config['dbname']};"
+         . "charset={$config['charset']}";
 
     try {
-        $pdo = new PDO($dsn, $user, $pass, $opts);
+        $pdo = new PDO(
+            $dsn,
+            $config['user'],
+            $config['password'],
+            [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_EMULATE_PREPARES => false
+            ]
+        );
+
         return $pdo;
     } catch (PDOException $e) {
         http_response_code(500);
         header('Content-Type: application/json');
-        echo json_encode(['error' => 'Database connection failed', 'details' => $e->getMessage()]);
+
+        echo json_encode([
+            'error' => 'Database connection failed',
+            'details' => $e->getMessage()
+        ]);
+
         exit;
     }
 }
@@ -32,22 +57,34 @@ function getPDO()
 function getMySQLi()
 {
     static $mysqli = null;
-    if ($mysqli) {
+
+    if ($mysqli !== null) {
         return $mysqli;
     }
 
-    $host = '127.0.0.1';
-    $db   = 'pharmacy';
-    $user = 'root';
-    $pass = '';
+    $config = getDbConfig();
 
-    $mysqli = new mysqli($host, $user, $pass, $db);
+    $mysqli = new mysqli(
+        $config['host'],
+        $config['user'],
+        $config['password'],
+        $config['dbname'],
+        $config['port']
+    );
+
     if ($mysqli->connect_errno) {
         http_response_code(500);
         header('Content-Type: application/json');
-        echo json_encode(['error' => 'Database connection failed']);
+
+        echo json_encode([
+            'error' => 'Database connection failed',
+            'details' => $mysqli->connect_error
+        ]);
+
         exit;
     }
-    $mysqli->set_charset('utf8mb4');
+
+    $mysqli->set_charset($config['charset']);
+
     return $mysqli;
 }
