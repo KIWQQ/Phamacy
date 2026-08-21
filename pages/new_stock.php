@@ -30,7 +30,7 @@ try {
             <h3 class="mb-1">Add Stock by Lot</h3>
             <div class="text-muted small">Every stock receipt must identify its lot and expiry date.</div>
         </div>
-        <a href="/Final_Project/pages/stock.php" class="btn btn-outline-secondary btn-sm">Back to Stock</a>
+        <a href="/pages/stock.php" class="btn btn-outline-secondary btn-sm">Back to Stock</a>
     </div>
 
     <?php if (!$schemaReady): ?>
@@ -124,7 +124,7 @@ document.getElementById('stockForm').addEventListener('submit', async function (
     message.innerHTML = '';
 
     try {
-        const response = await fetch('/Final_Project/api/save_stock.php', {
+        const response = await fetch('/api/save_stock.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(payload)
@@ -133,7 +133,7 @@ document.getElementById('stockForm').addEventListener('submit', async function (
         if (!response.ok || !data.ok) throw new Error(data.error || 'Failed to receive stock');
 
         message.innerHTML = `<div class="alert alert-success mb-0">Lot <strong>${escapeHtml(payload.lot_number)}</strong> received successfully. Usable stock is now <strong>${data.new_stock}</strong>.</div>`;
-        setTimeout(() => window.location.href = '/Final_Project/pages/stock.php', 1200);
+        setTimeout(() => window.location.href = '/pages/stock.php', 1200);
     } catch (error) {
         message.innerHTML = '<div class="alert alert-danger mb-0">' + escapeHtml(error.message) + '</div>';
         button.disabled = false;

@@ -68,14 +68,14 @@ if ($orderId > 0) {
             <?php endif; ?>
         </div>
         <div class="d-flex gap-2">
-            <a href="/Final_Project/pages/order_list.php" class="btn btn-outline-secondary btn-sm">Back to Orders</a>
+            <a href="/pages/order_list.php" class="btn btn-outline-secondary btn-sm">Back to Orders</a>
             <?php if ($order && !$refund): ?>
                 <button type="button" class="btn btn-outline-danger btn-sm" id="refundOrderBtn">Refund</button>
             <?php elseif ($refund): ?>
                 <span class="badge bg-refund align-self-center">Refunded</span>
             <?php endif; ?>
             <?php if ($order): ?>
-                <a href="/Final_Project/pages/order_list.php?search=<?php echo urlencode($order['order_id']); ?>" class="btn btn-outline-primary btn-sm">View in list</a>
+                <a href="/pages/order_list.php?search=<?php echo urlencode($order['order_id']); ?>" class="btn btn-outline-primary btn-sm">View in list</a>
             <?php endif; ?>
         </div>
     </div>
@@ -273,7 +273,7 @@ SELECT * FROM medicine WHERE medicine_id IN (<?php echo implode(',', array_map(f
 
             try {
                 console.log('refund: sending request for order', orderId);
-                const res = await fetch('/Final_Project/api/refund_order.php', {
+                const res = await fetch('/api/refund_order.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ order_id: orderId })

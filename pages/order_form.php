@@ -112,7 +112,7 @@ ob_start();
     </div>
 </div>
 
-<script defer src="/Final_Project/assets/js/order_calculation.js?v=<?php echo $oc_ver; ?>"></script>
+<script defer src="/assets/js/order_calculation.js?v=<?php echo $oc_ver; ?>"></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', async function(){
@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', async function(){
     if (!orderIdEl || !orderIdEl.value) return;
     const id = orderIdEl.value;
     try {
-        const res = await fetch('/Final_Project/api/get_order.php?id=' + encodeURIComponent(id));
+        const res = await fetch('/api/get_order.php?id=' + encodeURIComponent(id));
         if (!res.ok) throw new Error('Order not found');
         const data = await res.json();
         // set customer

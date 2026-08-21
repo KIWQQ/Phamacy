@@ -59,7 +59,7 @@ try {
             <h3 class="page-title mb-1">Lot Stock Log</h3>
             <div class="text-muted small">Positive quantity means stock in; negative quantity means stock out.</div>
         </div>
-        <a href="/Final_Project/pages/new_stock.php" class="btn btn-success btn-sm"><i class="bi bi-plus-circle me-1"></i>Add Stock Lot</a>
+        <a href="/pages/new_stock.php" class="btn btn-success btn-sm"><i class="bi bi-plus-circle me-1"></i>Add Stock Lot</a>
     </div>
 
     <?php if ($error): ?><div class="alert alert-warning"><?php echo htmlspecialchars($error); ?></div><?php endif; ?>
@@ -80,7 +80,7 @@ try {
                 </div>
                 <div class="col-6 col-md-3 d-flex gap-2">
                     <button type="submit" class="btn btn-primary btn-sm w-100">Search</button>
-                    <a href="/Final_Project/pages/stock_log.php" class="btn btn-secondary btn-sm w-100">Clear</a>
+                    <a href="/pages/stock_log.php" class="btn btn-secondary btn-sm w-100">Clear</a>
                 </div>
             </form>
         </div>

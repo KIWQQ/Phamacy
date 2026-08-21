@@ -40,7 +40,7 @@ $refundTotal = array_reduce($refunds, function($carry, $item) {
             <small class="text-muted">ดูประวัติและค้นหา refund ได้อย่างเป็นระเบียบ</small>
         </div>
         <div>
-            <a href="/Final_Project/pages/order_list.php" class="btn btn-outline-secondary btn-sm">Back to Orders</a>
+            <a href="/pages/order_list.php" class="btn btn-outline-secondary btn-sm">Back to Orders</a>
         </div>
     </div>
 
@@ -69,7 +69,7 @@ $refundTotal = array_reduce($refunds, function($carry, $item) {
                     <?php foreach ($refunds as $r): ?>
                         <tr>
                             <td><?php echo intval($r['refund_id']); ?></td>
-                            <td><a href="/Final_Project/pages/order_view.php?order_id=<?php echo intval($r['order_id']); ?>"><?php echo intval($r['order_id']); ?></a></td>
+                            <td><a href="/pages/order_view.php?order_id=<?php echo intval($r['order_id']); ?>"><?php echo intval($r['order_id']); ?></a></td>
                             <td><?php echo htmlspecialchars($r['customer_name'] ?? ''); ?></td>
                             <td><?php echo htmlspecialchars(date('Y-m-d H:i', strtotime($r['refund_date']))); ?></td>
                             <td class="text-end">฿ <?php echo number_format($r['total_amount'], 2); ?></td>

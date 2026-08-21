@@ -7,7 +7,7 @@ ob_start();
 <div class="container py-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h3 class="page-title mb-0">Employees</h3>
-        <a href="/Final_Project/pages/new_employee.php" class="btn btn-success btn-sm">
+        <a href="/pages/new_employee.php" class="btn btn-success btn-sm">
             <i class="bi bi-plus-circle me-1"></i>New Employee
         </a>
     </div>
@@ -119,7 +119,7 @@ ob_start();
                             <td class="text-end">฿ <?php echo number_format($e['salary'], 2); ?></td>
                             <td class="text-end">
                               <div class="d-flex gap-2 justify-content-end">
-                                <a href="/Final_Project/pages/new_employee.php?employee_id=<?php echo $e['employee_id']; ?>" class="btn btn-outline-primary btn-sm" title="Edit">
+                                <a href="/pages/new_employee.php?employee_id=<?php echo $e['employee_id']; ?>" class="btn btn-outline-primary btn-sm" title="Edit">
                                     <i class="bi bi-pencil"></i>
                                 </a>
                                 <button type="button" class="btn btn-outline-danger btn-sm delete-btn" data-id="<?php echo $e['employee_id']; ?>" data-name="<?php echo htmlspecialchars($e['employee_name']); ?>" title="Deactivate">
@@ -199,7 +199,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!deleteId) return;
             this.disabled = true; this.textContent = 'Deactivating...';
             try {
-                const response = await fetch('/Final_Project/api/delete_employee.php', {
+                const response = await fetch('/api/delete_employee.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ employee_id: parseInt(deleteId) })

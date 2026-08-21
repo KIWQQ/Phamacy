@@ -7,7 +7,7 @@ ob_start();
 <div class="container py-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h3 class="page-title mb-0">Customers</h3>
-        <a href="/Final_Project/pages/new_customer.php" class="btn btn-success btn-sm">
+        <a href="/pages/new_customer.php" class="btn btn-success btn-sm">
             <i class="bi bi-plus-circle me-1"></i>New Customer
         </a>
     </div>
@@ -118,10 +118,10 @@ ob_start();
                             <td class="text-end fw-bold"><?php echo intval($c['points']); ?></td>
                                                         <td class="text-end">
                                                             <div class="d-flex gap-2 justify-content-end">
-                                                                <a href="/Final_Project/pages/customer_points.php?customer_id=<?php echo $c['customer_id']; ?>" class="btn btn-outline-info btn-sm" title="View Points">
+                                                                <a href="/pages/customer_points.php?customer_id=<?php echo $c['customer_id']; ?>" class="btn btn-outline-info btn-sm" title="View Points">
                                                                         <i class="bi bi-coin"></i>
                                                                 </a>
-                                                                <a href="/Final_Project/pages/new_customer.php?customer_id=<?php echo $c['customer_id']; ?>" class="btn btn-outline-primary btn-sm" title="Edit">
+                                                                <a href="/pages/new_customer.php?customer_id=<?php echo $c['customer_id']; ?>" class="btn btn-outline-primary btn-sm" title="Edit">
                                                                         <i class="bi bi-pencil"></i>
                                                                 </a>
                                                                 <?php $btnClass = (strtolower($st) === 'inactive') ? 'btn-outline-secondary' : 'btn-outline-danger'; ?>
@@ -195,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const btnEl = this;
             btnEl.disabled = true;
             try {
-                const res = await fetch('/Final_Project/api/customer.php?action=update', {
+                const res = await fetch('/api/customer.php?action=update', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ customer_id: id, status: newStatus })

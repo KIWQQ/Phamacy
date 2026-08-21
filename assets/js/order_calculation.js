@@ -12,7 +12,7 @@ console.log('order_calculation.js loaded');
     }
 
     async function searchCustomers(q){
-        const url = `/Final_Project/api/search_customer.php?q=${encodeURIComponent(q)}`;
+        const url = `/api/search_customer.php?q=${encodeURIComponent(q)}`;
         try {
             console.debug('searchCustomers request', url);
             const r = await fetch(url);
@@ -30,7 +30,7 @@ console.log('order_calculation.js loaded');
             return [];
         }
     }
-    async function searchProducts(q){ return await fetchJson(`/Final_Project/api/search_product.php?q=${encodeURIComponent(q)}`) || []; }
+    async function searchProducts(q){ return await fetchJson(`/api/search_product.php?q=${encodeURIComponent(q)}`) || []; }
 
     function formatCurrency(v){ return Number(v||0).toFixed(2); }
 
@@ -179,7 +179,7 @@ console.log('order_calculation.js loaded');
         try{
             // If order-id present, call update endpoint instead of create
             const orderIdEl = el('order-id');
-            const endpoint = (orderIdEl && orderIdEl.value) ? '/Final_Project/api/update_order.php' : '/Final_Project/api/save_order.php';
+            const endpoint = (orderIdEl && orderIdEl.value) ? '/api/update_order.php' : '/api/save_order.php';
             if (orderIdEl && orderIdEl.value) payload.order_id = parseInt(orderIdEl.value);
             const res = await fetch(endpoint, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
             const text = await res.text();
@@ -187,7 +187,7 @@ console.log('order_calculation.js loaded');
             try { data = text ? JSON.parse(text) : null; } catch (e) { data = null; }
 
             if (res.ok && data && data.success) {
-                const url = `/Final_Project/pages/order_view.php?order_id=${encodeURIComponent(data.order_id)}`;
+                const url = `/pages/order_view.php?order_id=${encodeURIComponent(data.order_id)}`;
                 if (data.warnings && data.warnings.length) {
                     if (msg) msg.innerHTML = `<div class="alert alert-warning p-2"><strong>Warnings:</strong>${data.warnings.map(w=>`<div>${w}</div>`).join('')}</div>`;
                     setTimeout(()=> window.location.href = url, 2000);
@@ -224,7 +224,7 @@ console.log('order_calculation.js loaded');
                         el('selected-customer').textContent = b.dataset.name + ' (' + b.getAttribute('data-phone') + ')';
                         csug.innerHTML = '';
                         cinput.value = '';
-                        const c = await fetchJson(`/Final_Project/api/get_customer.php?id=${encodeURIComponent(b.dataset.id)}`) || {};
+                        const c = await fetchJson(`/api/get_customer.php?id=${encodeURIComponent(b.dataset.id)}`) || {};
                         currentCustomerAllergies = (c.allergy||'').split(',').map(s=>s.trim().toLowerCase()).filter(Boolean);
                         if (currentCustomerAllergies.length) el('selected-customer').textContent += ' — Allergy: ' + (c.allergy||'');
                         markAllergyRows();
@@ -251,7 +251,7 @@ console.log('order_calculation.js loaded');
                         const cid = parseInt(el('customer-id')?.value) || 0;
                         if (cid > 0) {
                             try {
-                                const chk = await fetchJson(`/Final_Project/api/check_customer_allergy.php?customer_id=${encodeURIComponent(cid)}&medicine_id=${encodeURIComponent(prod.id)}`);
+                                const chk = await fetchJson(`/api/check_customer_allergy.php?customer_id=${encodeURIComponent(cid)}&medicine_id=${encodeURIComponent(prod.id)}`);
                                 if (chk && chk.allergic) {
                                     const ok = await confirmAllergy(`Customer is allergic to "${prod.name}". Add anyway?`);
                                     if (!ok) { psug.innerHTML=''; pinput.value=''; return; }

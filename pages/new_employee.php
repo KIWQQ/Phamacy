@@ -85,7 +85,7 @@ ob_start();
                         <div id="message" class="mb-3"></div>
 
                         <div class="d-flex gap-2 justify-content-end">
-                            <a href="/Final_Project/pages/dashboard.php" class="btn btn-outline-secondary">Cancel</a>
+                            <a href="/pages/dashboard.php" class="btn btn-outline-secondary">Cancel</a>
                             <button type="submit" class="btn btn-success" id="submitBtn">
                                 <i class="bi bi-save me-1"></i><?php echo $editing ? 'Update Employee' : 'Save Employee'; ?>
                             </button>
@@ -108,7 +108,7 @@ document.getElementById('employeeForm').addEventListener('submit', async (e) => 
     }
 
     const isEdit = <?php echo $editing ? 'true' : 'false'; ?>;
-    const endpoint = isEdit ? '/Final_Project/api/update_employee.php' : '/Final_Project/api/save_employee.php';
+    const endpoint = isEdit ? '/api/update_employee.php' : '/api/save_employee.php';
 
     const submitBtn = document.getElementById('submitBtn');
     submitBtn.disabled = true;
@@ -146,7 +146,7 @@ document.getElementById('employeeForm').addEventListener('submit', async (e) => 
             const actionText = isEdit ? 'updated' : 'added';
             messageDiv.innerHTML = `<div class="alert alert-success">Employee ${actionText} successfully! Redirecting...</div>`;
             setTimeout(() => {
-                window.location.href = '/Final_Project/pages/dashboard.php';
+                window.location.href = '/pages/dashboard.php';
             }, 2000);
         } else {
             messageDiv.innerHTML = `<div class="alert alert-danger">${result.error || 'Failed to save employee'}</div>`;

@@ -35,7 +35,7 @@ $pdo = getPDO();
             <div class="text-sm text-red-700 mt-1" id="low-stock-list-top"></div>
           </div>
           <div style="flex:0 0 auto">
-            <a href="/Final_Project/pages/stock.php" class="inline-block bg-red-600 text-white px-3 py-1 rounded text-sm">View All</a>
+            <a href="/pages/stock.php" class="inline-block bg-red-600 text-white px-3 py-1 rounded text-sm">View All</a>
           </div>
         </div>
       </div>
@@ -180,7 +180,7 @@ function showCountBadge(container, count){
 }
 
 async function fetchView(view, start=null, end=null){
-  let url = '/Final_Project/api/dashboard.php?view=' + encodeURIComponent(view);
+  let url = '/api/dashboard.php?view=' + encodeURIComponent(view);
   if (start && end) url += '&start=' + encodeURIComponent(start) + '&end=' + encodeURIComponent(end);
   const res = await fetch(url);
   if(!res.ok) throw new Error('Failed: '+view);
@@ -272,7 +272,7 @@ async function renderSalesTrend(view){
 async function fetchAndRenderRange(start, end){
   // try backend first
   try{
-    const url = '/Final_Project/api/dashboard.php?view=sales_range&start='+encodeURIComponent(start)+"&end="+encodeURIComponent(end);
+    const url = '/api/dashboard.php?view=sales_range&start='+encodeURIComponent(start)+"&end="+encodeURIComponent(end);
     const res = await fetch(url);
     if (res.ok){
       const data = await res.json();
@@ -303,9 +303,9 @@ async function fetchAndRenderRange(start, end){
 // KPIs hydrate (accept optional start/end in yyyy-mm-dd)
 async function hydrateKPIs(start=null, end=null){
   try{
-    let url = '/Final_Project/api/dashboard.php?view=sales_month';
+    let url = '/api/dashboard.php?view=sales_month';
     if (start && end) {
-      url = '/Final_Project/api/dashboard.php?view=sales_range&start=' + encodeURIComponent(start) + '&end=' + encodeURIComponent(end);
+      url = '/api/dashboard.php?view=sales_range&start=' + encodeURIComponent(start) + '&end=' + encodeURIComponent(end);
     }
     const res = await fetch(url);
     const data = await res.json();

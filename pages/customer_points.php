@@ -7,7 +7,7 @@ ob_start();
 <div class="container py-4">
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h3 class="page-title mb-0">Customer Points</h3>
-    <a href="/Final_Project/pages/customer_list.php" class="btn btn-sm btn-outline-secondary">Back</a>
+    <a href="/pages/customer_list.php" class="btn btn-sm btn-outline-secondary">Back</a>
   </div>
 
   <?php

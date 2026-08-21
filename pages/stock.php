@@ -48,7 +48,7 @@ try {
             <h3 class="page-title mb-1">Medicine Stock</h3>
             <div class="text-muted small">FEFO: the lot with the nearest expiry date is sold first.</div>
         </div>
-        <a href="/Final_Project/pages/new_stock.php" class="btn btn-success">
+        <a href="/pages/new_stock.php" class="btn btn-success">
             <i class="bi bi-plus-circle me-1"></i>Add Stock Lot
         </a>
     </div>
@@ -65,7 +65,7 @@ try {
                 </div>
                 <div class="col-12 col-md-3 d-flex gap-2">
                     <button class="btn btn-primary btn-sm w-100" type="submit">Search</button>
-                    <a class="btn btn-secondary btn-sm w-100" href="/Final_Project/pages/stock.php">Clear</a>
+                    <a class="btn btn-secondary btn-sm w-100" href="/pages/stock.php">Clear</a>
                 </div>
             </form>
 
@@ -114,8 +114,8 @@ try {
                                 <?php endif; ?>
                             </td>
                             <td class="text-nowrap">
-                                <a class="btn btn-sm btn-outline-secondary" href="/Final_Project/pages/stock_lots.php?medicine_id=<?php echo (int)$medicine['medicine_id']; ?>">View Lots</a>
-                                <a class="btn btn-sm btn-outline-primary" href="/Final_Project/pages/new_stock.php?medicine_id=<?php echo (int)$medicine['medicine_id']; ?>">Add Lot</a>
+                                <a class="btn btn-sm btn-outline-secondary" href="/pages/stock_lots.php?medicine_id=<?php echo (int)$medicine['medicine_id']; ?>">View Lots</a>
+                                <a class="btn btn-sm btn-outline-primary" href="/pages/new_stock.php?medicine_id=<?php echo (int)$medicine['medicine_id']; ?>">Add Lot</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

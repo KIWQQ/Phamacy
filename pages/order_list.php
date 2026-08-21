@@ -7,7 +7,7 @@ ob_start();
 <div class="container py-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h3 class="page-title mb-0">Orders</h3>
-        <a href="/Final_Project/pages/order_form.php" class="btn btn-success btn-sm">
+        <a href="/pages/order_form.php" class="btn btn-success btn-sm">
             <i class="bi bi-plus-circle me-1"></i>New Order
         </a>
     </div>
@@ -27,7 +27,7 @@ ob_start();
       } else {
         $customer = $q;
       }
-    }
+    }g
     // support combined sort+dir in a single select (format: key:dir)
     $sortdir = isset($_GET['sortdir']) ? trim($_GET['sortdir']) : 'order_date:desc';
     if (strpos($sortdir, ':') !== false) {
@@ -166,9 +166,9 @@ ob_start();
                             <td class="text-end">฿ <?php echo number_format($o['total'],2); ?></td>
                             <td class="text-end">
                               <div class="d-flex gap-2 justify-content-end">
-                                <a href="/Final_Project/pages/order_view.php?order_id=<?php echo $o['order_id']; ?>" class="btn btn-sm btn-outline-primary">View</a>
+                                <a href="/pages/order_view.php?order_id=<?php echo $o['order_id']; ?>" class="btn btn-sm btn-outline-primary">View</a>
                                 <?php if (empty($o['refunded'])): ?>
-                                  <a href="/Final_Project/pages/order_form.php?order_id=<?php echo $o['order_id']; ?>" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                  <a href="/pages/order_form.php?order_id=<?php echo $o['order_id']; ?>" class="btn btn-sm btn-outline-secondary">Edit</a>
                                   <button type="button" class="btn btn-sm btn-outline-warning refund-order-btn" data-id="<?php echo $o['order_id']; ?>">Refund</button>
                                 <?php endif; ?>
                               </div>
@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function(){
       const id = this.dataset.id; if (!id) return; if (!confirm('Refund order #' + id + '? This will restore stock and deduct points.')) return;
       const btnEl = this; btnEl.disabled = true; btnEl.textContent = 'Refunding...';
         try {
-        const res = await fetch('/Final_Project/api/refund_order.php', { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ order_id: parseInt(id) }) });
+        const res = await fetch('/api/refund_order.php', { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ order_id: parseInt(id) }) });
         const text = await res.text();
         let data = null;
         try { data = text ? JSON.parse(text) : null; } catch(e) { data = null; }

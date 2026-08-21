@@ -86,7 +86,7 @@ ob_start();
                         <div id="message" class="mb-3"></div>
 
                         <div class="d-flex gap-2 justify-content-end">
-                            <a href="/Final_Project/pages/dashboard.php" class="btn btn-outline-secondary">Cancel</a>
+                            <a href="/pages/dashboard.php" class="btn btn-outline-secondary">Cancel</a>
                             <button type="submit" class="btn btn-success" id="submitBtn">
                                 <i class="bi bi-save me-1"></i><?php echo $editing ? 'Update Customer' : 'Save Customer'; ?>
                             </button>
@@ -113,7 +113,7 @@ document.getElementById('customerForm').addEventListener('submit', async (e) => 
     submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Saving...';
 
     const isEdit = <?php echo $editing ? 'true' : 'false'; ?>;
-    const endpoint = isEdit ? '/Final_Project/api/update_customer.php' : '/Final_Project/api/save_customer.php';
+    const endpoint = isEdit ? '/api/update_customer.php' : '/api/save_customer.php';
 
     const data = {
         customer_name: document.getElementById('customer_name').value,
@@ -147,7 +147,7 @@ document.getElementById('customerForm').addEventListener('submit', async (e) => 
             const actionText = isEdit ? 'updated' : 'added';
             messageDiv.innerHTML = `<div class="alert alert-success">Customer ${actionText} successfully! Redirecting...</div>`;
             setTimeout(() => {
-                window.location.href = '/Final_Project/pages/dashboard.php';
+                window.location.href = '/pages/dashboard.php';
             }, 2000);
         } else {
             messageDiv.innerHTML = `<div class="alert alert-danger">${result.error || 'Failed to save customer'}</div>`;
@@ -177,7 +177,7 @@ document.getElementById('customerForm').addEventListener('submit', async (e) => 
         if (controller) controller.abort();
         controller = new AbortController();
         try {
-            const res = await fetch('/Final_Project/api/search_product.php?q=' + encodeURIComponent(q), {signal: controller.signal});
+            const res = await fetch('/api/search_product.php?q=' + encodeURIComponent(q), {signal: controller.signal});
             if (!res.ok) return [];
             const rows = await res.json();
             return Array.isArray(rows) ? rows : [];

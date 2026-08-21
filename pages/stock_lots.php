@@ -51,9 +51,9 @@ try {
             <?php endif; ?>
         </div>
         <div class="d-flex gap-2">
-            <a href="/Final_Project/pages/stock.php" class="btn btn-outline-secondary btn-sm">Back to Stock</a>
+            <a href="/pages/stock.php" class="btn btn-outline-secondary btn-sm">Back to Stock</a>
             <?php if ($medicine): ?>
-                <a href="/Final_Project/pages/new_stock.php?medicine_id=<?php echo (int)$medicine['medicine_id']; ?>" class="btn btn-success btn-sm">
+                <a href="/pages/new_stock.php?medicine_id=<?php echo (int)$medicine['medicine_id']; ?>" class="btn btn-success btn-sm">
                     <i class="bi bi-plus-circle me-1"></i>Add Lot
                 </a>
             <?php endif; ?>

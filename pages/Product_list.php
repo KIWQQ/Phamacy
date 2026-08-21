@@ -7,7 +7,7 @@ ob_start();
 <div class="container py-4 main-container">
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h3 class="page-title mb-0">Products</h3>
-    <a href="/Final_Project/pages/new_medicine.php" class="btn btn-success btn-sm">
+    <a href="/pages/new_medicine.php" class="btn btn-success btn-sm">
       <i class="bi bi-plus-circle me-1"></i>New Medicine
     </a>
   </div>
@@ -116,7 +116,7 @@ ob_start();
         </div>
         <div class="filter-actions">
           <button class="btn btn-primary btn-sm" type="submit">Search</button>
-          <a class="btn btn-secondary btn-sm" href="/Final_Project/pages/Product_list.php">Clear</a>
+          <a class="btn btn-secondary btn-sm" href="/pages/Product_list.php">Clear</a>
         </div>
       </form>
     </div>
@@ -162,7 +162,7 @@ ob_start();
               <td class="text-end">฿ <?php echo number_format($o['price'], 2); ?></td>
               <td class="text-end">
                 <div class="table-actions">
-                  <a href="/Final_Project/pages/new_medicine.php?medicine_id=<?php echo $o['medicine_id']; ?>" class="btn btn-sm btn-outline-primary">Edit</a>
+                  <a href="/pages/new_medicine.php?medicine_id=<?php echo $o['medicine_id']; ?>" class="btn btn-sm btn-outline-primary">Edit</a>
                   <?php if (isset($o['status']) && $o['status'] === 'Discontinued'): ?>
                     <button type="button" class="btn btn-sm btn-outline-secondary toggle-status-btn" data-id="<?php echo $o['medicine_id']; ?>" data-action="restore">Undo</button>
                   <?php else: ?>
@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', function(){
       const btnEl = this; btnEl.disabled = true; const origText = btnEl.textContent;
       btnEl.textContent = (action === 'cancel') ? 'Discontinuing...' : 'Restoring...';
       try {
-        const url = (action === 'cancel') ? '/Final_Project/api/delete_medicine.php' : '/Final_Project/api/restore_medicine.php';
+        const url = (action === 'cancel') ? '/api/delete_medicine.php' : '/api/restore_medicine.php';
         const res = await fetch(url, { method:'POST', headers:{ 'Content-Type': 'application/json' }, body: JSON.stringify({ medicine_id: parseInt(id) }) });
         const data = await res.json().catch(() => null);
         if (res.ok && data && data.success) {

@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function(){
   const input = document.getElementById('topSearch');
   if (btn && input) btn.addEventListener('click', ()=>{
     const q = input.value.trim();
-    if (q) window.location.href = '/Final_Project/pages/order_list.php?search=' + encodeURIComponent(q);
+    if (q) window.location.href = '/pages/order_list.php?search=' + encodeURIComponent(q);
   });
 
   const themeToggle = document.getElementById('themeToggle');

@@ -84,13 +84,13 @@ try {
                         <div class="alert alert-info">
                             <strong>Usable stock: <?php echo number_format((int)$stock); ?></strong><br>
                             Stock cannot be edited here because every quantity must belong to a lot with an expiry date.
-                            <?php if ($isEdit): ?><a href="/Final_Project/pages/new_stock.php?medicine_id=<?php echo (int)$medicineId; ?>" class="alert-link">Add a stock lot</a>.<?php endif; ?>
+                            <?php if ($isEdit): ?><a href="/pages/new_stock.php?medicine_id=<?php echo (int)$medicineId; ?>" class="alert-link">Add a stock lot</a>.<?php endif; ?>
                         </div>
 
                         <div id="message" class="mb-3"></div>
 
                         <div class="d-flex gap-2 justify-content-end">
-                            <a href="/Final_Project/pages/Product_list.php" class="btn btn-outline-secondary">Cancel</a>
+                            <a href="/pages/Product_list.php" class="btn btn-outline-secondary">Cancel</a>
                             <button type="submit" class="btn btn-success" id="submitBtn">
                                 <i class="bi bi-save me-1"></i><?php echo $isEdit ? 'Update Medicine' : 'Save Medicine'; ?>
                             </button>
@@ -130,7 +130,7 @@ document.getElementById('medicineForm').addEventListener('submit', async (e) => 
     }
 
     try {
-        const response = await fetch(isEdit ? '/Final_Project/api/update_medicine.php' : '/Final_Project/api/save_medicine.php', {
+        const response = await fetch(isEdit ? '/api/update_medicine.php' : '/api/save_medicine.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
@@ -143,8 +143,8 @@ document.getElementById('medicineForm').addEventListener('submit', async (e) => 
             messageDiv.innerHTML = `<div class="alert alert-success">Medicine ${isEdit ? 'updated' : 'added'} successfully! Redirecting...</div>`;
             setTimeout(() => {
                 window.location.href = isEdit
-                    ? '/Final_Project/pages/Product_list.php'
-                    : '/Final_Project/pages/new_stock.php?medicine_id=' + encodeURIComponent(result.medicine_id);
+                    ? '/pages/Product_list.php'
+                    : '/pages/new_stock.php?medicine_id=' + encodeURIComponent(result.medicine_id);
             }, 1500);
         } else {
             messageDiv.innerHTML = `<div class="alert alert-danger">${result.error || 'Failed to save medicine'}</div>`;
