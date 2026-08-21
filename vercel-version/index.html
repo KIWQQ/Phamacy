@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy POS - Static Version</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-shell">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="brand-icon"><i class="bi bi-capsule"></i></div>
+                <div>
+                    <div class="brand-title">Pharmacy POS</div>
+                    <div class="brand-sub">Static Version</div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-label">Main</div>
+                <a href="#" class="nav-link active" data-page="dashboard"><i class="bi bi-speedometer2"></i> Dashboard</a>
+
+                <div class="nav-label">Orders</div>
+                <a href="#" class="nav-link" data-page="orders"><i class="bi bi-receipt"></i> All Orders</a>
+                <a href="#" class="nav-link" data-page="neworder"><i class="bi bi-plus-circle"></i> New Order</a>
+                <a href="#" class="nav-link" data-page="refunds"><i class="bi bi-arrow-counterclockwise"></i> Refunds</a>
+
+                <div class="nav-label">Inventory</div>
+                <a href="#" class="nav-link" data-page="medicines"><i class="bi bi-hospital-box"></i> Medicines</a>
+                <a href="#" class="nav-link" data-page="newmedicine"><i class="bi bi-plus-circle"></i> Add Medicine</a>
+                <a href="#" class="nav-link" data-page="stock"><i class="bi bi-boxes"></i> Stock Levels</a>
+                <a href="#" class="nav-link" data-page="stocklog"><i class="bi bi-clock-history"></i> Stock Log</a>
+
+                <div class="nav-label">Customers</div>
+                <a href="#" class="nav-link" data-page="customers"><i class="bi bi-people"></i> Customers</a>
+                <a href="#" class="nav-link" data-page="newcustomer"><i class="bi bi-person-plus"></i> Add Customer</a>
+                <a href="#" class="nav-link" data-page="customerpoints"><i class="bi bi-star"></i> Loyalty Points</a>
+
+                <div class="nav-label">Staff</div>
+                <a href="#" class="nav-link" data-page="employees"><i class="bi bi-briefcase"></i> Employees</a>
+                <a href="#" class="nav-link" data-page="newemployee"><i class="bi bi-person-plus"></i> Add Employee</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="btn-icon" id="themeToggle" title="Toggle Dark Mode"><i class="bi bi-moon"></i></button>
+            </div>
+        </aside>
+
+        <!-- MAIN -->
+        <main class="main">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title" id="pageTitle">Dashboard</h1>
+                    <p class="page-sub" id="pageSub">Overview of your pharmacy operations</p>
+                </div>
+                <button class="btn-mobile-menu" id="sidebarToggle"><i class="bi bi-list" style="font-size:24px;"></i></button>
+            </div>
+
+            <div class="pages-container">
+                <!-- DASHBOARD -->
+                <div class="page active" id="dashboard">
+                    <div class="kpi-grid">
+                        <div class="kpi-card">
+                            <div class="kpi-icon"><i class="bi bi-cash-coin"></i></div>
+                            <div class="kpi-body">
+                                <div class="kpi-label">Total Sales</div>
+                                <div class="kpi-value" id="dashTotalSales">฿0.00</div>
+                                <div class="kpi-sub">All time sales</div>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon"><i class="bi bi-bag-check"></i></div>
+                            <div class="kpi-body">
+                                <div class="kpi-label">Total Orders</div>
+                                <div class="kpi-value" id="dashTotalOrders">0</div>
+                                <div class="kpi-sub">Completed orders</div>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon danger"><i class="bi bi-exclamation-circle"></i></div>
+                            <div class="kpi-body">
+                                <div class="kpi-label">Low Stock Items</div>
+                                <div class="kpi-value danger" id="dashLowStock">0</div>
+                                <div class="kpi-sub">Items below threshold</div>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon"><i class="bi bi-person-check"></i></div>
+                            <div class="kpi-body">
+                                <div class="kpi-label">Total Customers</div>
+                                <div class="kpi-value" id="dashTotalCustomers">0</div>
+                                <div class="kpi-sub">Registered customers</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-row">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Recent Orders</h3>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table" id="dashRecentOrders">
+                                    <thead>
+                                        <tr>
+                                            <th>Order ID</th>
+                                            <th>Customer</th>
+                                            <th>Total</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Low Stock Medicines</h3>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table" id="dashLowStockTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Medicine</th>
+                                            <th>Current</th>
+                                            <th>Reorder Level</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ORDERS LIST -->
+                <div class="page" id="orders">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>All Orders</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table" id="ordersTable">
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Customer</th>
+                                        <th>Items</th>
+                                        <th>Total</th>
+                                        <th>Payment</th>
+                                        <th>Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NEW ORDER -->
+                <div class="page" id="neworder">
+                    <div class="form-layout">
+                        <div class="form-left">
+                            <div class="card">
+                                <div class="card-header"><h3>Customer Information</h3></div>
+                                <div style="padding:20px; position:relative;">
+                                    <div class="form-group">
+                                        <label>Search Customer</label>
+                                        <input type="text" id="orderCustomerSearch" placeholder="Type name or phone...">
+                                        <div id="customerSuggestions" class="suggestions"></div>
+                                    </div>
+                                    <div id="selectedCustomerInfo" style="display:none; margin-top:16px;">
+                                        <div class="selected-item">
+                                            <span id="selectedCustomerName"></span>
+                                            <button type="button" class="btn-close" onclick="document.getElementById('selectedCustomerInfo').style.display='none'; document.getElementById('orderCustomerSearch').value='';"></button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="allergyWarningBox" class="alert alert-warning" style="display:none; margin:20px;">
+                                    <strong>⚠️ Allergies Detected</strong>
+                                    <div id="customerAllergyList" style="margin-top:8px;"></div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header"><h3>Select Medicines</h3></div>
+                                <div style="padding:20px; position:relative;">
+                                    <div class="form-group">
+                                        <label>Search Medicine</label>
+                                        <input type="text" id="orderMedicineSearch" placeholder="Type medicine name...">
+                                        <div id="medicineSuggestions" class="suggestions"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-right">
+                            <div class="card">
+                                <div class="card-header"><h3>Order Items</h3></div>
+                                <div style="padding:20px;">
+                                    <div class="table-responsive">
+                                        <table class="items-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Medicine</th>
+                                                    <th>Price</th>
+                                                    <th>Qty</th>
+                                                    <th>Total</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="orderItems"></tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="summary-box">
+                                        <div class="summary-row">
+                                            <span>Subtotal:</span>
+                                            <span id="orderSubtotal">฿0.00</span>
+                                        </div>
+                                        <div class="summary-row total">
+                                            <span>Total:</span>
+                                            <span id="orderTotal">฿0.00</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Payment Method</label>
+                                        <select id="orderPayment">
+                                            <option value="cash">Cash</option>
+                                            <option value="bank_transfer">Bank Transfer</option>
+                                            <option value="credit_card">Credit Card</option>
+                                        </select>
+                                    </div>
+
+                                    <div id="orderAllergyAlert" class="alert alert-danger" style="display:none;">
+                                        <strong>🔴 Allergy Alert</strong>
+                                        <div id="orderAllergyList"></div>
+                                        <button type="button" class="btn btn-small" onclick="app.clearAllergyItems()" style="margin-top:8px; background:#ef4444; color:white;">Clear Allergic Items</button>
+                                    </div>
+
+                                    <div id="orderStockAlert" class="alert alert-warning" style="display:none;">
+                                        <strong>🟡 Stock Warning</strong>
+                                        <div id="orderStockList"></div>
+                                        <div style="margin-top:8px; font-size:12px; color:#92400e;">
+                                            <strong>Why:</strong> <span id="stockWhy"></span>
+                                        </div>
+                                        <div style="margin-top:4px; font-size:12px; color:#92400e;">
+                                            <strong>Next Step:</strong> <span id="stockNext"></span>
+                                        </div>
+                                    </div>
+
+                                    <div id="orderMessage"></div>
+
+                                    <div class="form-actions">
+                                        <button type="button" class="btn btn-outline" onclick="app.confirmClearOrder()">Clear</button>
+                                        <button type="button" class="btn btn-primary" id="orderSaveBtn" onclick="app.saveOrder()">Save Order</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- REFUNDS -->
+                <div class="page" id="refunds">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Refund History</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table" id="refundsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Refund ID</th>
+                                        <th>Order ID</th>
+                                        <th>Customer</th>
+                                        <th>Amount</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MEDICINES -->
+                <div class="page" id="medicines">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Medicines Inventory</h3>
+                            <a href="#" class="nav-link" data-page="newmedicine" style="border:none; padding:0; margin:0;">
+                                <button class="btn btn-primary"><i class="bi bi-plus-circle"></i> Add Medicine</button>
+                            </a>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table" id="medicinesTable">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Price</th>
+                                        <th>Stock</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ADD/EDIT MEDICINE -->
+                <div class="page" id="newmedicine">
+                    <div class="card">
+                        <div class="card-header"><h3 id="medicineFormTitle">Add Medicine</h3></div>
+                        <div style="padding:20px;">
+                            <form id="medicineForm" class="form-single">
+                                <div class="form-group">
+                                    <label>Medicine Name</label>
+                                    <input type="text" id="medName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Type</label>
+                                    <select id="medType" required></select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Price (฿)</label>
+                                    <input type="number" id="medPrice" step="0.01" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Stock</label>
+                                    <input type="number" id="medStock" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select id="medStatus">
+                                        <option value="Available">Available</option>
+                                        <option value="Out of Stock">Out of Stock</option>
+                                        <option value="Discontinued">Discontinued</option>
+                                    </select>
+                                </div>
+                                <div class="form-actions">
+                                    <a href="#" class="nav-link" data-page="medicines" style="border:none; padding:0; margin:0;">
+                                        <button type="button" class="btn btn-outline">Cancel</button>
+                                    </a>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STOCK LEVELS -->
+                <div class="page" id="stock">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Current Stock Levels</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table" id="stockTable">
+                                <thead>
+                                    <tr>
+                                        <th>Medicine</th>
+                                        <th>Current Stock</th>
+                                        <th>Reorder Level</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STOCK LOG -->
+                <div class="page" id="stocklog">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Stock Transaction Log</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table" id="stockLogTable">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Medicine</th>
+                                        <th>Type</th>
+                                        <th>Quantity</th>
+                                        <th>Reference</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CUSTOMERS -->
+                <div class="page" id="customers">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Customers</h3>
+                            <a href="#" class="nav-link" data-page="newcustomer" style="border:none; padding:0; margin:0;">
+                                <button class="btn btn-primary"><i class="bi bi-person-plus"></i> Add Customer</button>
+                            </a>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table" id="customersTable">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Phone</th>
+                                        <th>Address</th>
+                                        <th>Allergies</th>
+                                        <th>Points</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ADD/EDIT CUSTOMER -->
+                <div class="page" id="newcustomer">
+                    <div class="card">
+                        <div class="card-header"><h3 id="customerFormTitle">Add Customer</h3></div>
+                        <div style="padding:20px;">
+                            <form id="customerForm" class="form-single">
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input type="text" id="custName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone</label>
+                                    <input type="tel" id="custPhone" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <textarea id="custAddress" rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Allergies</label>
+                                    <div class="checkbox-list" id="allergyCheckboxes"></div>
+                                </div>
+                                <div class="form-actions">
+                                    <a href="#" class="nav-link" data-page="customers" style="border:none; padding:0; margin:0;">
+                                        <button type="button" class="btn btn-outline">Cancel</button>
+                                    </a>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CUSTOMER POINTS -->
+                <div class="page" id="customerpoints">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Loyalty Points</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table" id="customerPointsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Customer Name</th>
+                                        <th>Points Balance</th>
+                                        <th>Last Updated</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EMPLOYEES -->
+                <div class="page" id="employees">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Employees</h3>
+                            <a href="#" class="nav-link" data-page="newemployee" style="border:none; padding:0; margin:0;">
+                                <button class="btn btn-primary"><i class="bi bi-person-plus"></i> Add Employee</button>
+                            </a>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table" id="employeesTable">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Position</th>
+                                        <th>Phone</th>
+                                        <th>Email</th>
+                                        <th>Salary</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ADD/EDIT EMPLOYEE -->
+                <div class="page" id="newemployee">
+                    <div class="card">
+                        <div class="card-header"><h3 id="employeeFormTitle">Add Employee</h3></div>
+                        <div style="padding:20px;">
+                            <form id="employeeForm" class="form-single">
+                                <div class="form-group">
+                                    <label>Full Name</label>
+                                    <input type="text" id="empName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Position</label>
+                                    <input type="text" id="empPosition" placeholder="e.g., Pharmacist, Assistant" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone</label>
+                                    <input type="tel" id="empPhone" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" id="empEmail" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Salary (฿)</label>
+                                    <input type="number" id="empSalary" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <textarea id="empAddress" rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select id="empStatus">
+                                        <option value="Active">Active</option>
+                                        <option value="Inactive">Inactive</option>
+                                        <option value="Leave">Leave</option>
+                                    </select>
+                                </div>
+                                <div class="form-actions">
+                                    <a href="#" class="nav-link" data-page="employees" style="border:none; padding:0; margin:0;">
+                                        <button type="button" class="btn btn-outline">Cancel</button>
+                                    </a>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-overlay" onclick="app.closeModal()"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Confirm</h3>
+                <button class="btn-close" onclick="app.closeModal();">×</button>
+            </div>
+            <div class="modal-body" id="modalMessage"></div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="app.closeModal();">Cancel</button>
+                <button class="btn btn-danger" id="confirmBtn">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div id="toast" class="toast">
+        <i class="bi bi-check-circle"></i>
+        <span id="toastMessage"></span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

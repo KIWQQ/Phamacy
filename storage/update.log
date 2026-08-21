@@ -1,0 +1,12 @@
+[2026-04-03T06:59:29+02:00] update_employee REQUEST_METHOD=POST IP=::1 RAW={"employee_name":"test","position":"Cashier","salary":15000,"phone":"08177","email":"","address":"","employee_id":1016}
+[2026-04-03T06:59:29+02:00] update_employee PARSED=array (
+  'employee_name' => 'test',
+  'position' => 'Cashier',
+  'salary' => 15000,
+  'phone' => '08177',
+  'email' => '',
+  'address' => '',
+  'employee_id' => 1016,
+)
+[2026-04-03T06:59:29+02:00] update_employee EXECUTE_UPDATE with params=[1016,"test","Cashier",15000,"08177",""]
+[2026-04-03T06:59:29+02:00] update_employee EXECUTE_UPDATE_OK affected=1
